@@ -6,11 +6,11 @@ export default function useFetch(fetchFn, initialValue) {
   const [fetchedData, setFetchedData] = useState(initialValue);
 
   useEffect(() => {
-    async function fetchPlaces() {
+    async function fetchData() {
       setIsLoading(true);
       try {
-        const places = await fetchFn();
-        setFetchedData(places);
+        const data = await fetchFn();
+        setFetchedData(data);
       } catch (error) {
         setError({
           message: error.message || "Failed to fetch data.",
@@ -19,12 +19,13 @@ export default function useFetch(fetchFn, initialValue) {
       setIsLoading(false);
     }
 
-    fetchPlaces();
+    fetchData();
   }, [fetchFn]);
 
   return {
     isLoading,
-    error,
     fetchedData,
+    setFetchedData,
+    error,
   };
 }
